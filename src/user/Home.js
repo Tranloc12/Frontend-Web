@@ -205,10 +205,30 @@ const Home = () => {
                     ))}
                 </div>
                 <div className="hero-content">
-                    <h1 className="hero-title">Tìm kiếm chuyến đi hoàn hảo của bạn</h1>
+                    <div className="hero-badge">
+                        <i className="fa-solid fa-bus"></i>
+                        <span>Hệ thống Quản lý Xe Khách</span>
+                    </div>
+                    <h1 className="hero-title">
+                        Tìm kiếm chuyến đi <span className="highlight">hoàn hảo</span>
+                    </h1>
                     <p className="hero-subtitle">
-                        Khám phá và đặt vé xe khách một cách nhanh chóng và tiện lợi.
+                        Khám phá và đặt vé xe khách một cách nhanh chóng, tiện lợi &amp; an toàn.
                     </p>
+                    <div className="hero-stats">
+                        <div className="hero-stat">
+                            <span className="hero-stat-number">50+</span>
+                            <span className="hero-stat-label">Tuyến đường</span>
+                        </div>
+                        <div className="hero-stat">
+                            <span className="hero-stat-number">1000+</span>
+                            <span className="hero-stat-label">Khách hàng</span>
+                        </div>
+                        <div className="hero-stat">
+                            <span className="hero-stat-number">24/7</span>
+                            <span className="hero-stat-label">Hỗ trợ</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -287,7 +307,7 @@ const Home = () => {
             {/* Trips list */}
             <Container className="main-content">
                 <h2 className="section-title">
-                    {isSearching ? "Kết quả tìm kiếm" : "Các Chuyến đi Tiêu biểu"}
+                    {isSearching ? "🔍 Kết quả tìm kiếm" : "🚌 Các Chuyến đi Tiêu biểu"}
                 </h2>
                 {loading ? (
                     <div className="text-center my-5">
@@ -370,11 +390,11 @@ const Home = () => {
                 )}
             </Container>
             <Container className="main-content">
-                <Card className="reviews-card mt-5 shadow-lg rounded-4">
-                    <Card.Body>
-                        <Card.Title className="reviews-card-title text-center mb-4 fs-3 fw-bold text-primary">
-                            <i className="fa-solid fa-star me-2 text-warning"></i>
-                            Đánh giá của Khách hàng
+                <Card className="reviews-card mt-5">
+                    <Card.Body className="p-4 p-md-5">
+                        <Card.Title className="reviews-card-title text-center mb-5" style={{fontSize: '2rem'}}>
+                            <i className="fa-solid fa-star me-2" style={{color:'#f59e0b'}}></i>
+                            ⭐ Đánh giá của Khách hàng
                         </Card.Title>
 
                         {loadingReviews ? (
