@@ -68,16 +68,56 @@ const Statistic = () => {
     loadStatistics();
   }, []);
 
+  // Hàm xuất CSV
+  const exportToCSV = () => {
+    // 1. Tạo CSV Doanh Thu
+    let csvContent = "Tháng,Doanh Thu (VNĐ)\n";
+    revenueData.forEach(row => {
+      csvContent += `${row.month},${row.revenue}\n`;
+    });
+    
+    // Thêm khoảng trắng
+    csvContent += "\n\n";
+
+    // 2. Tạo CSV Chuyến xe
+    csvContent += "Tuyến Đường,Số Chuyến\n";
+    tripData.forEach(row => {
+      csvContent += `${row.routeName},${row.count}\n`;
+    });
+
+    const blob = new Blob(["\ufeff", csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `BaoCao_ThongKe_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div style={{ padding: '30px', fontFamily: "'Inter', sans-serif", backgroundColor: '#faf9f7', minHeight: '100vh' }}>
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '30px' }}>
-        <div style={{ width: '45px', height: '45px', background: 'linear-gradient(135deg, #e8832a, #f09a40)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 15px rgba(232,131,42,0.3)', marginRight: '16px' }}>
-          <i className="fa-solid fa-chart-pie" style={{ color: '#fff', fontSize: '20px' }}></i>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '30px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ width: '45px', height: '45px', background: 'linear-gradient(135deg, #e8832a, #f09a40)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 15px rgba(232,131,42,0.3)', marginRight: '16px' }}>
+            <i className="fa-solid fa-chart-pie" style={{ color: '#fff', fontSize: '20px' }}></i>
+          </div>
+          <div>
+            <h2 style={{ color: '#1a1410', margin: 0, fontWeight: 800 }}>Dashboard Thống Kê</h2>
+            <p style={{ color: '#9c8c78', margin: 0, fontSize: '0.9rem' }}>Tổng quan hoạt động kinh doanh bến xe</p>
+          </div>
         </div>
-        <div>
-          <h2 style={{ color: '#1a1410', margin: 0, fontWeight: 800 }}>Dashboard Thống Kê</h2>
-          <p style={{ color: '#9c8c78', margin: 0, fontSize: '0.9rem' }}>Tổng quan hoạt động kinh doanh bến xe</p>
-        </div>
+        
+        <button onClick={exportToCSV} style={{
+          background: '#fff', border: '1.5px solid #16a34a', color: '#16a34a',
+          padding: '10px 20px', borderRadius: '10px', fontWeight: 700,
+          display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer',
+          transition: 'all 0.3s ease', boxShadow: '0 4px 12px rgba(22,163,74,0.1)'
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.background = '#16a34a'; e.currentTarget.style.color = '#fff'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#16a34a'; }}>
+          <i className="fa-solid fa-file-csv"></i> Xuất Báo Cáo CSV
+        </button>
       </div>
 
       {error && (
