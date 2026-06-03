@@ -1,229 +1,285 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Container, Form, Image, Nav, Navbar, NavDropdown, Badge } from "react-bootstrap";
+import { Container, Image, Nav, Navbar, NavDropdown, Badge } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { MyDispatchContext, MyUserContext } from "../../contexts/Contexts";
 import RoleBasedComponent from "../common/RoleBasedComponent";
 import { ROLES } from "../../utils/roleUtils";
-import { FaBell } from 'react-icons/fa'; // Đã import biểu tượng chuông
+import { FaBell } from 'react-icons/fa';
 import "../../index.css";
 
 const Header = () => {
   const nav = useNavigate();
-  const [kw, setKw] = useState("");
   const user = useContext(MyUserContext);
   const dispatch = useContext(MyDispatchContext);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
 
-  const [unreadCount, setUnreadCount] = useState(0); // State để lưu số thông báo chưa đọc
-
-  // Hàm để tính toán số thông báo chưa đọc
   const calculateUnreadCount = () => {
-    if (!user) return 0; // Không tính nếu chưa đăng nhập
+    if (!user) return 0;
     const storedNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
-    const count = storedNotifications.filter(notif => !notif.read).length;
-    return count;
+    return storedNotifications.filter(n => !n.read).length;
   };
 
   useEffect(() => {
-    // Cập nhật số thông báo chưa đọc khi component mount
     setUnreadCount(calculateUnreadCount());
-
-    // Lắng nghe sự kiện storage để cập nhật UI khi có thay đổi trong localStorage
     const handleStorageChange = (e) => {
-      // Chỉ cập nhật nếu key 'notifications' thay đổi hoặc khi localStorage bị xóa (e.key === null)
-      if (e.key === 'notifications' || e.key === null) {
-        setUnreadCount(calculateUnreadCount());
-      }
+      if (e.key === 'notifications' || e.key === null) setUnreadCount(calculateUnreadCount());
     };
-
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('storage', handleStorageChange);
-
-    // Dọn dẹp event listener khi component unmount
+    window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [user]); // Chạy lại khi trạng thái user thay đổi
-
-
-
-
+  }, [user]);
 
   return (
-    <Navbar expand="lg" className="navbar">
+    <Navbar expand="lg" style={{
+      background: scrolled ? 'rgba(10,10,15,0.97)' : 'rgba(10,10,15,0.85)',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      borderBottom: '1px solid rgba(255,255,255,0.06)',
+      boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.4)' : '0 2px 20px rgba(0,0,0,0.2)',
+      padding: '12px 0',
+      transition: 'all 0.3s ease',
+      position: 'sticky',
+      top: 0,
+      zIndex: 1000,
+    }}>
       <Container>
-        <Navbar.Brand as={Link} to="/">CAR</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto align-items-center">
-            <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
+        {/* Brand */}
+        <Navbar.Brand as={Link} to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+          <div style={{
+            width: '38px', height: '38px',
+            background: 'linear-gradient(135deg, #e75702, #ff7a30)',
+            borderRadius: '10px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(231,87,2,0.4)',
+            flexShrink: 0,
+          }}>
+            <i className="fa-solid fa-bus" style={{ fontSize: '18px', color: '#fff' }}></i>
+          </div>
+          <span style={{
+            fontSize: '1.3rem', fontWeight: 900, color: '#fff',
+            letterSpacing: '-0.5px', lineHeight: 1,
+          }}>
+            Xe<span style={{
+              background: 'linear-gradient(135deg, #e75702, #ff7a30)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>Khách</span>
+          </span>
+        </Navbar.Brand>
 
-            {/* Ai cũng thấy menu Quản lý xe */}
+        <Navbar.Toggle aria-controls="main-navbar" style={{
+          border: '1px solid rgba(255,255,255,0.15)',
+          borderRadius: '8px', padding: '6px 10px',
+          color: '#fff',
+        }} />
 
+        <Navbar.Collapse id="main-navbar">
+          <Nav className="me-auto align-items-center" style={{ gap: '2px' }}>
+            <Nav.Link as={Link} to="/" style={navLinkStyle}>
+              <i className="fa-solid fa-house me-1"></i> Trang chủ
+            </Nav.Link>
+            <Nav.Link as={Link} to="/trips" style={navLinkStyle}>
+              <i className="fa-solid fa-route me-1"></i> Chuyến đi
+            </Nav.Link>
+            <Nav.Link as={Link} to="/routes" style={navLinkStyle}>
+              <i className="fa-solid fa-map me-1"></i> Tuyến đường
+            </Nav.Link>
 
-            {/* ✨ Thêm menu Danh sách chuyến đi */}
-            <Nav.Link as={Link} to="/trips">Danh sách chuyến đi</Nav.Link>
-
-
-
-            {/* Quản lý chỉ cho Admin và Manager */}
+            {/* Manager/Admin/Staff menu */}
             <RoleBasedComponent allowedRoles={[ROLES.ADMIN, ROLES.MANAGER, ROLES.STAFF]}>
-
-              {/* Thêm link cho BusManagement */}
-              <Nav.Link as={Link} to="/bus-management">Quản lý Xe khách</Nav.Link>
-              {/* Thêm link cho RoutesManagement */}
-              <Nav.Link as={Link} to="/manager/routes">Quản lý tuyến đường</Nav.Link>
-              {/* Thêm link cho UserManagement */}
-              {/* <Nav.Link as={Link} to="/user-management">Quản lý Người dùng</Nav.Link> */}
-              {/* Thêm link cho TripManagement */}
-              <Nav.Link as={Link} to="/trip-management">Quản lý chuyến đi</Nav.Link>
-
-              {/* ✨ Thêm link cho ScheduleManagement */}
-              <Nav.Link as={Link} to="/manager/schedules">Quản lý lịch trình</Nav.Link>
-
-              <Nav.Link as={Link} to="/manager/reviews">Quản lý Đánh giá </Nav.Link>
-
-              <Nav.Link as={Link} to="/bus-stations">Bến xe</Nav.Link>
-              <Nav.Link as={Link} to="/transfer-points">Điểm trung chuyển</Nav.Link>
-
-              <Nav.Link as={Link} to="/trip-transfer">Các nơi xe trung chuyển</Nav.Link>
-
-
-
-
-
+              <NavDropdown title={
+                <span style={{ color: 'rgba(255,255,255,0.85)', fontWeight: 500 }}>
+                  <i className="fa-solid fa-gears me-1"></i> Quản lý
+                </span>
+              } id="manager-dropdown" style={{ marginLeft: '2px' }}>
+                <NavDropdown.Item as={Link} to="/bus-management" style={dropdownItemStyle}>
+                  <i className="fa-solid fa-bus me-2" style={{ color: '#e75702' }}></i>Quản lý Xe khách
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/trip-management" style={dropdownItemStyle}>
+                  <i className="fa-solid fa-route me-2" style={{ color: '#e75702' }}></i>Quản lý Chuyến đi
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/manager/routes" style={dropdownItemStyle}>
+                  <i className="fa-solid fa-map-marked-alt me-2" style={{ color: '#e75702' }}></i>Quản lý Tuyến đường
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/manager/schedules" style={dropdownItemStyle}>
+                  <i className="fa-solid fa-calendar-days me-2" style={{ color: '#e75702' }}></i>Quản lý Lịch trình
+                </NavDropdown.Item>
+                <NavDropdown.Divider style={{ borderColor: 'rgba(255,255,255,0.08)' }} />
+                <NavDropdown.Item as={Link} to="/user-management" style={dropdownItemStyle}>
+                  <i className="fa-solid fa-users me-2" style={{ color: '#3b82f6' }}></i>Quản lý Người dùng
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/manager/reviews" style={dropdownItemStyle}>
+                  <i className="fa-solid fa-star me-2" style={{ color: '#f59e0b' }}></i>Quản lý Đánh giá
+                </NavDropdown.Item>
+                <NavDropdown.Divider style={{ borderColor: 'rgba(255,255,255,0.08)' }} />
+                <NavDropdown.Item as={Link} to="/bus-stations" style={dropdownItemStyle}>
+                  <i className="fa-solid fa-building me-2" style={{ color: '#22c55e' }}></i>Bến xe
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/transfer-points" style={dropdownItemStyle}>
+                  <i className="fa-solid fa-code-branch me-2" style={{ color: '#22c55e' }}></i>Điểm trung chuyển
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/trip-transfer" style={dropdownItemStyle}>
+                  <i className="fa-solid fa-arrows-split-up-and-left me-2" style={{ color: '#22c55e' }}></i>Trung chuyển xe
+                </NavDropdown.Item>
+              </NavDropdown>
             </RoleBasedComponent>
 
+            {/* Driver */}
             <RoleBasedComponent allowedRoles={[ROLES.DRIVER]}>
-              {/* Thêm link cho Driver */}
-              <Nav.Link as={Link} to="/driver/schedules">
-                Lịch Trình Chạy Xe
+              <Nav.Link as={Link} to="/driver/schedules" style={navLinkStyle}>
+                <i className="fa-solid fa-steering-wheel me-1"></i> Lịch chạy xe
               </Nav.Link>
-
             </RoleBasedComponent>
 
-            <RoleBasedComponent allowedRoles={[ROLES.STAFF]}>
-              {/* ✨ Thêm link cho ScheduleManagement */}
-              <Nav.Link as={Link} to="/manager/schedules">Quản lý lịch trình</Nav.Link>
-
-            </RoleBasedComponent>
-
+            {/* Passenger */}
             <RoleBasedComponent allowedRoles={[ROLES.PASSENGER]}>
-              {/* Thêm link cho Driver */}
-              <Nav.Link as={Link} to="/my-reviews">
-                Đánh giá của tôi
+              <Nav.Link as={Link} to="/bookings-history" style={navLinkStyle}>
+                <i className="fa-solid fa-ticket me-1"></i> Vé của tôi
               </Nav.Link>
-              <Nav.Link as={Link} to="/payments-history">
-                Lịch sử giao dịch
-              </Nav.Link>
-
-
             </RoleBasedComponent>
 
-
-            <Nav.Link as={Link} to="/routes">Danh sách tuyến</Nav.Link>
-            {/* ✨ Link Thông báo với biểu tượng chuông và số lượng chưa đọc */}
-            {user && ( // Chỉ hiển thị nếu user đã đăng nhập
-              <Nav.Link as={Link} to="/notifi" className="d-flex align-items-center position-relative">
-                <FaBell className="me-1" />
+            {/* Notification bell */}
+            {user && (
+              <Nav.Link as={Link} to="/notifi" style={{ ...navLinkStyle, position: 'relative', marginLeft: '4px' }}>
+                <FaBell style={{ fontSize: '1.1rem' }} />
                 {unreadCount > 0 && (
-                  <Badge pill bg="danger" className="ms-1 position-absolute top-0 start-100 translate-middle">
-                    {unreadCount}
-                    <span className="visually-hidden">thông báo chưa đọc</span>
-                  </Badge>
+                  <span style={{
+                    position: 'absolute', top: '-2px', right: '-2px',
+                    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                    color: '#fff', fontSize: '0.65rem', fontWeight: 700,
+                    width: '18px', height: '18px', borderRadius: '50%',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    border: '2px solid rgba(10,10,15,0.9)',
+                  }}>{unreadCount}</span>
                 )}
               </Nav.Link>
             )}
+          </Nav>
 
-
-
-
-
-            {
-              user === null ? (
-                <>
-                  <Nav.Link
-                    as={Link}
-                    to="/register"
-                    className="text-white fw-semibold"
-                    style={{ transition: "color 0.3s" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "#dcdcdc")} // trắng xám nhạt khi hover
-                    onMouseLeave={e => (e.currentTarget.style.color = "white")}
+          {/* Auth section */}
+          <Nav className="align-items-center" style={{ gap: '8px' }}>
+            {user === null ? (
+              <>
+                <Nav.Link as={Link} to="/register" style={{
+                  color: 'rgba(255,255,255,0.7)',
+                  fontWeight: 600,
+                  padding: '8px 16px',
+                  borderRadius: '10px',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  fontSize: '0.9rem',
+                  transition: 'all 0.3s ease',
+                  textDecoration: 'none',
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; }}
+                >
+                  Đăng ký
+                </Nav.Link>
+                <Link to="/login" style={{
+                  background: 'linear-gradient(135deg, #e75702, #ff7a30)',
+                  color: '#fff', fontWeight: 700,
+                  padding: '9px 20px',
+                  borderRadius: '10px',
+                  fontSize: '0.9rem',
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 15px rgba(231,87,2,0.35)',
+                  transition: 'all 0.3s ease',
+                  display: 'inline-block',
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(231,87,2,0.5)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(231,87,2,0.35)'; }}
+                >
+                  <i className="fa-solid fa-right-to-bracket me-1"></i> Đăng nhập
+                </Link>
+              </>
+            ) : (
+              <>
+                <NavDropdown
+                  title={
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      {user.avatar ? (
+                        <Image src={user.avatar} alt="Avatar" roundedCircle width="34" height="34"
+                          style={{ border: '2px solid rgba(231,87,2,0.5)', objectFit: 'cover' }} />
+                      ) : (
+                        <div style={{
+                          width: '34px', height: '34px',
+                          background: 'linear-gradient(135deg, #e75702, #ff7a30)',
+                          borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          color: '#fff', fontWeight: 800, fontSize: '0.9rem',
+                        }}>
+                          {user.username?.charAt(0).toUpperCase()}
+                        </div>
+                      )}
+                      <span style={{ color: '#fff', fontWeight: 600, fontSize: '0.9rem' }}>
+                        {user.username}
+                      </span>
+                    </span>
+                  }
+                  id="user-nav-dropdown"
+                  align="end"
+                >
+                  <div style={{ padding: '12px 16px 8px', borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '4px' }}>
+                    <div style={{ color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700 }}>
+                      Tài khoản
+                    </div>
+                    <div style={{ color: '#f1f5f9', fontWeight: 700, marginTop: '2px' }}>{user.username}</div>
+                  </div>
+                  <NavDropdown.Item as={Link} to="/profile" style={dropdownItemStyle}>
+                    <i className="fa-solid fa-id-card me-2" style={{ color: '#3b82f6' }}></i>Thông tin tài khoản
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/bookings-history" style={dropdownItemStyle}>
+                    <i className="fa-solid fa-ticket me-2" style={{ color: '#22c55e' }}></i>Lịch sử mua vé
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/payments-history" style={dropdownItemStyle}>
+                    <i className="fa-solid fa-wallet me-2" style={{ color: '#f59e0b' }}></i>Lịch sử giao dịch
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/my-reviews" style={dropdownItemStyle}>
+                    <i className="fa-solid fa-star me-2" style={{ color: '#f59e0b' }}></i>Đánh giá của tôi
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/change-password" style={dropdownItemStyle}>
+                    <i className="fa-solid fa-key me-2" style={{ color: '#a78bfa' }}></i>Đổi mật khẩu
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider style={{ borderColor: 'rgba(255,255,255,0.08)' }} />
+                  <NavDropdown.Item
+                    onClick={() => { dispatch({ type: "logout" }); nav("/login"); }}
+                    style={{ ...dropdownItemStyle, color: '#fca5a5 !important' }}
                   >
-                    Đăng ký
-                  </Nav.Link>
-
-                  <Nav.Link
-                    as={Link}
-                    to="/login"
-                    className="text-warning fw-semibold"
-                    style={{ transition: "color 0.3s" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "#fff3cd")} // vàng nhạt khi hover
-                    onMouseLeave={e => (e.currentTarget.style.color = "#ffc107")}
-                  >
-                    Đăng nhập
-                  </Nav.Link>
-                </>
-              ) : (
-
-                <>
-
-
-                  <NavDropdown
-                    title={
-                      <>
-                        <Image
-                          src={user.avatar} // Sử dụng URL ảnh đại diện
-                          alt="Avatar"
-                          roundedCircle // Giúp ảnh có hình tròn
-                          width="40"
-                          height="40"
-                          className="me-2" // Khoảng cách bên phải
-                        />
-                        <span className="fw-semibold">Chào {user.username}</span>
-                      </>
-                    }
-                    id="user-nav-dropdown"
-                  >
-                    <NavDropdown.Item as={Link} to="/payments-history">
-                      Lịch sử giao dịch
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/profile">
-                      Thông tin tài khoản
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/my-reviews">
-                      Đánh giá của tôi
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/bookings-history">
-                      Lịch sử mua vé
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/change-password">
-                      Đặt lại mật khẩu
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-
-                  </NavDropdown>
-
-                  <Button
-                    onClick={() => {
-                      dispatch({ type: "logout" });
-                      nav("/login");
-                    }}
-                    variant="danger"
-                    className="ms-2"
-                  >
-                    Đăng xuất
-                  </Button>
-                </>
-              )
-            }
-
-
-
-
+                    <i className="fa-solid fa-right-from-bracket me-2" style={{ color: '#ef4444' }}></i>
+                    <span style={{ color: '#fca5a5' }}>Đăng xuất</span>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
+};
+
+// Styles
+const navLinkStyle = {
+  color: 'rgba(255,255,255,0.75)',
+  fontWeight: 500,
+  fontSize: '0.9rem',
+  padding: '8px 12px',
+  borderRadius: '8px',
+  transition: 'all 0.25s ease',
+  textDecoration: 'none',
+};
+
+const dropdownItemStyle = {
+  color: '#94a3b8',
+  padding: '10px 16px',
+  borderRadius: '8px',
+  fontSize: '0.9rem',
+  fontWeight: 500,
+  transition: 'all 0.2s ease',
 };
 
 export default Header;
