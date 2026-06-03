@@ -46,37 +46,32 @@ const Login = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f3460 100%)',
+      background: 'linear-gradient(160deg, #faf9f7 0%, #f5f0e8 40%, #fff8ee 100%)',
       padding: '20px',
       position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+      top: 0, left: 0, right: 0, bottom: 0,
       zIndex: 999,
     }}>
-      {/* Background orbs */}
-      <div style={{
-        position: 'absolute', width: '600px', height: '600px',
-        background: 'radial-gradient(circle, rgba(231,87,2,0.08) 0%, transparent 70%)',
-        top: '-200px', right: '-200px', borderRadius: '50%', pointerEvents: 'none'
-      }} />
+      {/* Decorative circles */}
       <div style={{
         position: 'absolute', width: '400px', height: '400px',
-        background: 'radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)',
-        bottom: '-100px', left: '-100px', borderRadius: '50%', pointerEvents: 'none'
+        background: 'radial-gradient(circle, rgba(232,131,42,0.07) 0%, transparent 70%)',
+        top: '-100px', right: '-100px', borderRadius: '50%', pointerEvents: 'none'
+      }} />
+      <div style={{
+        position: 'absolute', width: '300px', height: '300px',
+        background: 'radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%)',
+        bottom: '-80px', left: '-80px', borderRadius: '50%', pointerEvents: 'none'
       }} />
 
       <div style={{
-        background: 'rgba(18, 18, 30, 0.9)',
-        backdropFilter: 'blur(30px)',
-        WebkitBackdropFilter: 'blur(30px)',
-        border: '1px solid rgba(231,87,2,0.2)',
+        background: '#ffffff',
+        border: '1px solid rgba(0,0,0,0.08)',
         borderRadius: '24px',
         padding: '48px 40px',
         width: '100%',
         maxWidth: '420px',
-        boxShadow: '0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(231,87,2,0.05)',
+        boxShadow: '0 8px 40px rgba(0,0,0,0.1), 0 2px 10px rgba(0,0,0,0.06)',
         position: 'relative',
         zIndex: 1,
       }}>
@@ -84,21 +79,22 @@ const Login = () => {
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <div style={{
             width: '64px', height: '64px',
-            background: 'linear-gradient(135deg, #e75702, #ff7a30)',
+            background: 'linear-gradient(135deg, #e8832a, #f09a40)',
             borderRadius: '16px',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 16px',
-            boxShadow: '0 8px 24px rgba(231,87,2,0.4)',
+            boxShadow: '0 8px 24px rgba(232,131,42,0.3)',
           }}>
             <i className="fa-solid fa-bus" style={{ fontSize: '28px', color: '#fff' }}></i>
           </div>
           <h1 style={{
-            fontSize: '1.8rem', fontWeight: 900, color: '#fff',
+            fontSize: '1.8rem', fontFamily: "'Playfair Display', serif",
+            fontWeight: 700, color: '#1a1410',
             marginBottom: '8px', letterSpacing: '-0.5px'
           }}>
             Đăng nhập
           </h1>
-          <p style={{ color: '#64748b', fontSize: '0.9rem', margin: 0 }}>
+          <p style={{ color: '#9c8c78', fontSize: '0.9rem', margin: 0 }}>
             Chào mừng trở lại! Vui lòng đăng nhập.
           </p>
         </div>
