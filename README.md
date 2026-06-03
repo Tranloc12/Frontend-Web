@@ -58,9 +58,9 @@ Dự án phân chia các nhóm chức năng rõ ràng, phục vụ đầy đủ 
 ```mermaid
 graph TD
     %% Styling Definitions
-    classDef user fill:#ffffff,stroke:#e8832a,stroke-width:2px,color:#1a1410,rx:5px,ry:5px;
-    classDef core fill:#faf9f7,stroke:#c4b5a2,stroke-width:1px,color:#1a1410,rx:5px,ry:5px;
-    classDef external fill:#f09a40,stroke:#e8832a,stroke-width:2px,color:#ffffff,rx:5px,ry:5px;
+    classDef user fill:#ffffff,stroke:#e8832a,stroke-width:2px,color:#1a1410;
+    classDef core fill:#faf9f7,stroke:#c4b5a2,stroke-width:1px,color:#1a1410;
+    classDef external fill:#f09a40,stroke:#e8832a,stroke-width:2px,color:#ffffff;
     
     User((Khách Hàng / Admin)):::user
     
