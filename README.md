@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+<div align="center">
+  <img src="https://storage.googleapis.com/futa-busline-web-cms-prod/futa_group_76b71bf386/futa_group_76b71bf386.svg" alt="Logo" width="150" height="auto" />
+  <h1>🚌 HỆ THỐNG QUẢN LÝ BẾN XE KHÁCH (FRONTEND)</h1>
+  <p><i>Giao diện người dùng hiện đại, phong cách White Luxury chuyên nghiệp mang tiêu chuẩn Enterprise.</i></p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  <!-- Badges -->
+  <p>
+    <img src="https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=white" alt="React" />
+    <img src="https://img.shields.io/badge/React_Router-6.x-CA4245?logo=react-router&logoColor=white" alt="React Router" />
+    <img src="https://img.shields.io/badge/Bootstrap-5.x-7952B3?logo=bootstrap&logoColor=white" alt="Bootstrap" />
+    <img src="https://img.shields.io/badge/Axios-HTTP-5A29E4" alt="Axios" />
+  </p>
+</div>
 
-## Available Scripts
+## 🌟 TỔNG QUAN DỰ ÁN
+Đây là mã nguồn Frontend cho dự án **Hệ Thống Quản Lý Bến Xe Khách**. Hệ thống được xây dựng bằng thư viện ReactJS, tập trung mang lại trải nghiệm người dùng (UX) tối ưu và giao diện (UI) hiện đại theo xu hướng **White Luxury**.
 
-In the project directory, you can run:
+## ✨ CÁC TÍNH NĂNG NỔI BẬT ĐƯỢC TÍCH HỢP
 
-### `yarn start`
+### Dành cho Khách hàng (Passengers)
+*   🎫 **Đặt vé & Chọn ghế trực quan**: Mô phỏng sơ đồ xe thật, dễ dàng thao tác chọn/hủy ghế.
+*   🎟️ **Hệ thống Mã Giảm Giá (Voucher)**: Nhập mã giảm giá tự động tính toán tổng tiền.
+*   💳 **Thanh toán đa nền tảng**: Tích hợp sẵn VNPay, PayPal, VietQR, ZaloPay, MoMo,...
+*   📱 **Vé Điện Tử QR Code**: Tạo vé điện tử động bằng mã QR, hỗ trợ **tải file PDF** hoặc in vé trực tiếp.
+*   🤖 **Trợ lý Ảo AI (AI Assistant)**: Khung chat AI tư vấn khách hàng tự động 24/7.
+*   📍 **Live Tracking Map**: Xem bản đồ theo dõi vị trí xe thời gian thực.
+*   💬 **Live Chat Hỗ trợ**: Tích hợp Chat thời gian thực qua Firebase.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Dành cho Quản trị viên (Admin/Manager)
+*   📊 **Dashboard Analytics (Recharts)**: Bảng thống kê dữ liệu trực quan bằng biểu đồ (Line, Bar, Pie).
+*   📥 **Xuất báo cáo Excel (CSV)**: Cho phép xuất báo cáo doanh thu và số lượt chuyến đi.
+*   🚌 **Quản lý toàn diện**: CRUD các thực thể (Tuyến đường, Xe, Chuyến xe, Tài khoản, Điểm trung chuyển).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 CÀI ĐẶT VÀ CHẠY DỰ ÁN
 
-### `yarn test`
+### Yêu cầu hệ thống
+*   Node.js (>= 16.x)
+*   NPM hoặc Yarn
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Các bước cài đặt
+1. **Clone repository về máy:**
+   ```bash
+   git clone https://github.com/Tranloc12/Frontend-Web.git
+   ```
+2. **Di chuyển vào thư mục Frontend:**
+   ```bash
+   cd Frontend-Web
+   ```
+3. **Cài đặt các gói thư viện (Dependencies):**
+   ```bash
+   npm install
+   # hoặc dùng yarn: yarn install
+   ```
+4. **Chạy ứng dụng (Môi trường dev):**
+   ```bash
+   npm start
+   ```
+5. Ứng dụng sẽ chạy tại địa chỉ: `http://localhost:3000`
 
-### `yarn build`
+## 🛠️ CÔNG NGHỆ & THƯ VIỆN SỬ DỤNG
+*   **Core:** ReactJS (Hooks, Context API).
+*   **Routing:** React Router DOM (Xử lý điều hướng trang).
+*   **Styling:** CSS3, Bootstrap 5.
+*   **Data Fetching:** Axios.
+*   **Charts & Visualization:** Recharts (Vẽ biểu đồ Dashboard).
+*   **Utilities:** `moment` (Xử lý thời gian), `html2pdf.js` (Xuất PDF), `react-qr-code` (Tạo QR).
+*   **Realtime:** Firebase (Chat system).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🔗 KẾT NỐI VỚI BACKEND
+Cấu hình API kết nối với Backend được định nghĩa tại `src/configs/Apis.js`. Mặc định ứng dụng được cấu hình trỏ tới Cloud Backend, nhưng bạn có thể thay đổi để chạy cục bộ:
+```javascript
+const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8080/CarManagementApp/api";
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 👨‍💻 NHÓM PHÁT TRIỂN
+*   Đồ án chuyên ngành CNTT.
+*   Tập trung phát triển hệ thống quản lý chuyên nghiệp chuẩn thực tế.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+*Cảm ơn bạn đã xem dự án!*
