@@ -310,9 +310,7 @@ const SeatBooking = () => {
             const bookingResponse = await authApis().post(endpoints.bookings, {
                 tripId: trip.id,
                 numberOfSeats: numberOfSeats,
-                seatNumbers: selectedSeats.join(","),
-                pickupPoint: pickupTransferPointId,
-                dropoffPoint: dropoffTransferPointId,
+                seatNumbers: selectedSeats.join(",")
             });
 
             const newBookingId = bookingResponse.data.id || bookingResponse.data.bookingId;
