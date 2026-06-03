@@ -1,80 +1,120 @@
 <div align="center">
-  <img src="https://storage.googleapis.com/futa-busline-web-cms-prod/futa_group_76b71bf386/futa_group_76b71bf386.svg" alt="Logo" width="150" height="auto" />
-  <h1>🚌 HỆ THỐNG QUẢN LÝ BẾN XE KHÁCH (FRONTEND)</h1>
-  <p><i>Giao diện người dùng hiện đại, phong cách White Luxury chuyên nghiệp mang tiêu chuẩn Enterprise.</i></p>
-
-  <!-- Badges -->
+  <img src="https://storage.googleapis.com/futa-busline-web-cms-prod/futa_group_76b71bf386/futa_group_76b71bf386.svg" alt="Futa Group Logo" width="200" style="margin-bottom: 20px;"/>
+  
+  <h1 style="color: #e8832a; font-family: 'Playfair Display', serif;">LUXURY BUS MANAGEMENT SYSTEM</h1>
+  <p><b>PHÂN HỆ GIAO DIỆN NGƯỜI DÙNG (FRONTEND)</b></p>
+  
   <p>
-    <img src="https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=white" alt="React" />
-    <img src="https://img.shields.io/badge/React_Router-6.x-CA4245?logo=react-router&logoColor=white" alt="React Router" />
-    <img src="https://img.shields.io/badge/Bootstrap-5.x-7952B3?logo=bootstrap&logoColor=white" alt="Bootstrap" />
-    <img src="https://img.shields.io/badge/Axios-HTTP-5A29E4" alt="Axios" />
+    <i>Hệ thống quản lý bến xe khách cao cấp, mang trải nghiệm đặt vé chuẩn Enterprise với thiết kế "White Luxury".</i>
+  </p>
+
+  <p>
+    <a href="#technologies"><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" /></a>
+    <a href="#technologies"><img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" alt="React Router" /></a>
+    <a href="#technologies"><img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap" /></a>
+    <a href="#technologies"><img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" /></a>
   </p>
 </div>
 
-## 🌟 TỔNG QUAN DỰ ÁN
-Đây là mã nguồn Frontend cho dự án **Hệ Thống Quản Lý Bến Xe Khách**. Hệ thống được xây dựng bằng thư viện ReactJS, tập trung mang lại trải nghiệm người dùng (UX) tối ưu và giao diện (UI) hiện đại theo xu hướng **White Luxury**.
+<hr />
 
-## ✨ CÁC TÍNH NĂNG NỔI BẬT ĐƯỢC TÍCH HỢP
+## 📖 GIỚI THIỆU TỔNG QUAN
 
-### Dành cho Khách hàng (Passengers)
-*   🎫 **Đặt vé & Chọn ghế trực quan**: Mô phỏng sơ đồ xe thật, dễ dàng thao tác chọn/hủy ghế.
-*   🎟️ **Hệ thống Mã Giảm Giá (Voucher)**: Nhập mã giảm giá tự động tính toán tổng tiền.
-*   💳 **Thanh toán đa nền tảng**: Tích hợp sẵn VNPay, PayPal, VietQR, ZaloPay, MoMo,...
-*   📱 **Vé Điện Tử QR Code**: Tạo vé điện tử động bằng mã QR, hỗ trợ **tải file PDF** hoặc in vé trực tiếp.
-*   🤖 **Trợ lý Ảo AI (AI Assistant)**: Khung chat AI tư vấn khách hàng tự động 24/7.
-*   📍 **Live Tracking Map**: Xem bản đồ theo dõi vị trí xe thời gian thực.
-*   💬 **Live Chat Hỗ trợ**: Tích hợp Chat thời gian thực qua Firebase.
-
-### Dành cho Quản trị viên (Admin/Manager)
-*   📊 **Dashboard Analytics (Recharts)**: Bảng thống kê dữ liệu trực quan bằng biểu đồ (Line, Bar, Pie).
-*   📥 **Xuất báo cáo Excel (CSV)**: Cho phép xuất báo cáo doanh thu và số lượt chuyến đi.
-*   🚌 **Quản lý toàn diện**: CRUD các thực thể (Tuyến đường, Xe, Chuyến xe, Tài khoản, Điểm trung chuyển).
-
-## 🚀 CÀI ĐẶT VÀ CHẠY DỰ ÁN
-
-### Yêu cầu hệ thống
-*   Node.js (>= 16.x)
-*   NPM hoặc Yarn
-
-### Các bước cài đặt
-1. **Clone repository về máy:**
-   ```bash
-   git clone https://github.com/Tranloc12/Frontend-Web.git
-   ```
-2. **Di chuyển vào thư mục Frontend:**
-   ```bash
-   cd Frontend-Web
-   ```
-3. **Cài đặt các gói thư viện (Dependencies):**
-   ```bash
-   npm install
-   # hoặc dùng yarn: yarn install
-   ```
-4. **Chạy ứng dụng (Môi trường dev):**
-   ```bash
-   npm start
-   ```
-5. Ứng dụng sẽ chạy tại địa chỉ: `http://localhost:3000`
-
-## 🛠️ CÔNG NGHỆ & THƯ VIỆN SỬ DỤNG
-*   **Core:** ReactJS (Hooks, Context API).
-*   **Routing:** React Router DOM (Xử lý điều hướng trang).
-*   **Styling:** CSS3, Bootstrap 5.
-*   **Data Fetching:** Axios.
-*   **Charts & Visualization:** Recharts (Vẽ biểu đồ Dashboard).
-*   **Utilities:** `moment` (Xử lý thời gian), `html2pdf.js` (Xuất PDF), `react-qr-code` (Tạo QR).
-*   **Realtime:** Firebase (Chat system).
-
-## 🔗 KẾT NỐI VỚI BACKEND
-Cấu hình API kết nối với Backend được định nghĩa tại `src/configs/Apis.js`. Mặc định ứng dụng được cấu hình trỏ tới Cloud Backend, nhưng bạn có thể thay đổi để chạy cục bộ:
-```javascript
-const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8080/CarManagementApp/api";
-```
-
-## 👨‍💻 NHÓM PHÁT TRIỂN
-*   Đồ án chuyên ngành CNTT.
-*   Tập trung phát triển hệ thống quản lý chuyên nghiệp chuẩn thực tế.
+Chào mừng đến với hệ thống **Luxury Bus Management**. Đây không chỉ là một ứng dụng đặt vé xe thông thường, mà là một nền tảng thương mại điện tử giao thông vận tải cao cấp. Được thiết kế theo ngôn ngữ **White Luxury** (Trắng tinh tế kết hợp điểm nhấn Vàng/Cam sang trọng), hệ thống mang lại trải nghiệm mượt mà, chuyên nghiệp và đẳng cấp cho cả Khách hàng lẫn Ban quản trị.
 
 ---
-*Cảm ơn bạn đã xem dự án!*
+
+## ✨ TÍNH NĂNG ĐỘC QUYỀN (PREMIUM FEATURES)
+
+### 💎 Trải nghiệm Hành khách (Passenger Portal)
+- 🎫 **Đặt vé & Chọn ghế trực quan (Visual Seat Mapping):** Giao diện chọn giường nằm 2 tầng trực quan, cập nhật trạng thái ghế realtime.
+- 🎟️ **Hệ thống Mã Giảm Giá (Smart Voucher):** Tự động tính toán chiết khấu, trừ thẳng vào giá tiền khi nhập mã (VD: `SALE20`).
+- 📱 **Vé Điện Tử QR Code & PDF:** 
+  - Khởi tạo mã QR động ngay khi thanh toán thành công.
+  - Tích hợp tính năng **Tải vé định dạng PDF** chuẩn ngành.
+- 💳 **Thanh toán Đa kênh (Omnichannel Payment):** Hỗ trợ VNPay, PayPal, MoMo, ZaloPay, ShopeePay,...
+- 🤖 **Trợ lý Ảo AI (AI Booking Assistant):** Tích hợp Chatbot nổi (Floating widget) tự động phân tích ý định và tư vấn chuyến đi 24/7.
+- 📍 **Theo dõi vị trí xe Live (Live GPS Tracking):** Bản đồ tương tác trực tiếp, báo cáo vị trí xe khách đang chạy trên đường.
+
+### 📈 Quản trị Doanh nghiệp (Enterprise Dashboard)
+- 📊 **Phân tích dữ liệu (Data Analytics):** Trang thống kê sử dụng `Recharts` vẽ biểu đồ doanh thu tháng, cơ cấu người dùng và lượt chuyến.
+- 📥 **Trích xuất Dữ liệu (Export CSV):** Hỗ trợ Admin tải xuống báo cáo dạng Excel để phục vụ kế toán.
+- 🚌 **Quản lý Nguồn lực toàn diện (Resource Management):** Quản lý Tuyến đường, Trạm trung chuyển, Xe khách, Lịch trình, Nhân viên và Hành khách.
+
+---
+
+## 🏗️ KIẾN TRÚC HỆ THỐNG (ARCHITECTURE)
+
+```mermaid
+graph TD
+    A[Client Browser] -->|HTTP / HTTPS| B(ReactJS SPA)
+    B -->|Axios REST Calls| C{API Gateway / Context}
+    C -->|Auth| D[JWT Validation]
+    C -->|Data| E[Spring Boot Backend]
+    B -->|State Management| F[React Context API + useReducer]
+```
+
+### Cấu trúc thư mục cốt lõi
+```text
+src/
+├── components/       # Các UI Component độc lập (Button, Modal, Card...)
+│   ├── booking/      # Xử lý luồng đặt vé, mã giảm giá, QR Code
+│   ├── chat/         # Chứa module Trợ lý ảo AI & Firebase Chat
+│   ├── manager/      # Giao diện cho Admin (Dashboard, Export CSV)
+│   └── payment/      # Cổng giao tiếp VNPay, PayPal
+├── configs/          # Cấu hình API, Base URL (Apis.js)
+├── contexts/         # Quản lý Global State (Auth, Cart)
+├── services/         # Helper functions gọi API, xử lý Logic Maps
+├── utils/            # Các tiện ích format ngày, tiền tệ, validate
+└── index.css         # Token thiết kế hệ thống (Màu White Luxury)
+```
+
+---
+
+## 🚀 HƯỚNG DẪN TRIỂN KHAI (DEPLOYMENT)
+
+### 1. Chuẩn bị môi trường
+Hãy đảm bảo máy tính của bạn đã cài đặt:
+- Node.js (phiên bản `v16.0.0` trở lên)
+- NPM hoặc Yarn
+
+### 2. Cài đặt cục bộ (Local Setup)
+```bash
+# 1. Clone mã nguồn
+git clone https://github.com/Tranloc12/Frontend-Web.git
+
+# 2. Di chuyển vào dự án
+cd Frontend-Web/carmanagementweb
+
+# 3. Cài đặt các thư viện cần thiết
+npm install
+
+# 4. (Tùy chọn) Khởi tạo các thư viện mở rộng nếu thiếu
+npm install html2pdf.js recharts react-qr-code
+
+# 5. Chạy dự án
+npm start
+```
+> Trình duyệt sẽ tự động mở trang web tại địa chỉ: `http://localhost:3000`
+
+### 3. Cấu hình Endpoint
+Mặc định hệ thống trỏ về Cloud Backend. Nếu bạn muốn test với Backend đang chạy trên máy cá nhân, hãy mở file `src/configs/Apis.js` và chỉnh sửa:
+```javascript
+// Bỏ comment dòng này để chạy local
+// const BASE_URL = "http://localhost:8080/CarManagementApp/api"; 
+const BASE_URL = process.env.REACT_APP_API_URL || "https://doannganhquanlixekhach.onrender.com/api";
+```
+
+---
+
+## 🎨 THIẾT KẾ UI/UX (DESIGN SYSTEM)
+Dự án tuân thủ nghiêm ngặt bảng màu **White Luxury**:
+- ⚪ **Background:** `#ffffff` (Trắng tinh khiết) & `#faf9f7` (Xám nhạt ấm)
+- 🟠 **Primary Accents:** `#e8832a` (Cam hoàng kim) & `#f09a40` (Vàng hoàng kim)
+- ⚫ **Text:** `#1a1410` (Đen trầm) & `#5c4f3a` (Nâu xám)
+- **Typography:** `Playfair Display` (Tiêu đề sang trọng) & `Inter` (Nội dung dễ đọc).
+
+---
+<div align="center">
+  <p><i>Made with ❤️ by Nhóm Phát Triển - Đồ Án Chuyên Ngành CNTT</i></p>
+</div>
