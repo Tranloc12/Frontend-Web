@@ -9,6 +9,11 @@ if (BASE_URL.startsWith("http://") && !BASE_URL.includes("localhost")) {
     BASE_URL = BASE_URL.replace("http://", "https://");
 }
 
+// Đảm bảo luôn có hậu tố /api
+if (!BASE_URL.endsWith("/api") && !BASE_URL.endsWith("/api/")) {
+    BASE_URL = BASE_URL.endsWith("/") ? BASE_URL + "api" : BASE_URL + "/api";
+}
+
 export const endpoints = {
   register: "/register",
   login: "/login",
