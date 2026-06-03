@@ -64,17 +64,17 @@ graph TD
     
     User((Khách Hàng / Admin)):::user
     
-    subgraph UI Components
+    subgraph ui ["UI Components"]
         Home[Trang chủ & Tìm kiếm]:::core
         Booking[Đặt vé & Giảm giá]:::core
         Dash[Admin Dashboard]:::core
     end
     
-    subgraph Trạng thái (Context)
+    subgraph context ["Trạng thái (Context)"]
         AuthContext[Phiên Đăng Nhập]:::core
     end
     
-    subgraph Dịch vụ bên ngoài
+    subgraph external_services ["Dịch vụ bên ngoài"]
         Payment[Thanh toán VNPay/PayPal]:::external
         Realtime[Bản đồ & AI Chatbot]:::external
     end
