@@ -1,9 +1,9 @@
 <div align="center">
-  <img src="https://storage.googleapis.com/futa-busline-web-cms-prod/futa_group_76b71bf386/futa_group_76b71bf386.svg" alt="Futa Group Logo" width="180" style="margin-bottom: 25px;"/>
+  <img src="https://storage.googleapis.com/futa-busline-web-cms-prod/futa_group_76b71bf386/futa_group_76b71bf386.svg" alt="Logo" width="180" style="margin-bottom: 25px;"/>
   
-  <h1 align="center" style="font-weight: 300; letter-spacing: 2px;">TRANSPORTATION MANAGEMENT SYSTEM</h1>
+  <h1 align="center" style="font-weight: 300; letter-spacing: 2px;">HỆ THỐNG QUẢN LÝ XE KHÁCH CAO CẤP</h1>
   <p align="center" style="font-size: 1.1em; color: #666; font-style: italic;">
-    — FRONTEND APPLICATION PORTAL —
+    — PHÂN HỆ GIAO DIỆN NGƯỜI DÙNG (FRONTEND) —
   </p>
 
   <p align="center" style="margin-top: 20px;">
@@ -16,12 +16,44 @@
 
 <br/>
 
-## 1. PROJECT OVERVIEW
-This repository contains the front-end application for the Transportation Management System. Designed with an emphasis on minimalism, clarity, and enterprise-grade performance, the interface ensures a seamless booking experience for passengers and a robust management dashboard for administrators.
+## 1. TỔNG QUAN DỰ ÁN
+Đây là kho lưu trữ mã nguồn Frontend cho Đồ án **Hệ Thống Quản Lý Bến Xe Khách**. Giao diện được thiết kế theo ngôn ngữ **White Luxury**, tối giản nhưng vô cùng sang trọng, mang lại trải nghiệm đặt vé và quản trị chuyên nghiệp chuẩn doanh nghiệp (Enterprise).
 
-## 2. SYSTEM ARCHITECTURE
+---
 
-The application follows a modern Single Page Application (SPA) architecture, utilizing React Context for state management and Axios for RESTful communication.
+## 2. CHI TIẾT CÁC TÍNH NĂNG VÀ CHỨC NĂNG (MODULES & FEATURES)
+
+Dự án phân chia các nhóm chức năng rõ ràng, phục vụ đầy đủ cho mọi đối tượng tham gia vào hệ thống vận tải.
+
+### 🙎‍♂️ Dành cho Hành Khách (Passenger)
+- **Tư vấn AI & CSKH:** Tích hợp Trợ lý ảo AI (Chatbot nổi) hỗ trợ giải đáp tự động và hệ thống Live Chat (Firebase) kết nối với nhân viên.
+- **Tìm kiếm & Đặt vé:** Tìm kiếm chuyến đi theo điểm đi/đến, ngày giờ. Chọn ghế trên **Sơ đồ xe trực quan 2 tầng**.
+- **Áp dụng Mã giảm giá (Voucher):** Ô nhập Promo Code tự động tính toán và giảm trừ trực tiếp vào tổng hóa đơn thanh toán.
+- **Thanh toán trực tuyến đa kênh:** Hỗ trợ thanh toán bảo mật qua **VNPay** và **PayPal**.
+- **Quản lý Vé Điện tử (E-Ticket):** 
+  - Xem danh sách vé đã đặt.
+  - Hiển thị **Mã QR Code** quét vé thực tế.
+  - Tích hợp xuất và **Tải vé định dạng PDF**.
+- **Định vị & Theo dõi xe:** Tích hợp Google Maps / Leaflet hiển thị Real-time vị trí xe đang chạy.
+
+### 👔 Dành cho Quản Trị Viên (Admin & Manager)
+- **Dashboard Thống kê (Analytics):** Bảng điều khiển tích hợp Recharts vẽ biểu đồ Doanh thu (Line), Tuyến xe (Bar) và Cơ cấu khách hàng (Pie).
+- **Xuất Báo Cáo:** Chức năng tải xuống dữ liệu thống kê dưới dạng file Excel/CSV phục vụ công tác kế toán.
+- **Quản lý Hệ thống Toàn diện (CRUD):**
+  - *Quản lý Tài khoản & Phân quyền:* Thêm, sửa, xóa, khóa tài khoản Nhân viên, Tài xế, Khách hàng.
+  - *Quản lý Tuyến đường:* Khởi tạo điểm đi, điểm đến, lộ trình.
+  - *Quản lý Chuyến xe & Lịch trình:* Setup chuyến chạy, gán tài xế, gán xe, định giá vé.
+  - *Quản lý Phương tiện (Bus):* Quản lý biển số, số ghế, loại xe.
+  - *Quản lý Bến bãi & Điểm trung chuyển.*
+- **Quản lý Đánh giá (Reviews):** Theo dõi, kiểm duyệt và xóa các đánh giá tiêu cực từ khách hàng.
+
+### 🚌 Dành cho Tài Xế (Driver)
+- **Xem Lịch Trình (Schedule):** Bảng phân công chuyến đi chi tiết (ngày giờ, tuyến, xe).
+- **Cập nhật trạng thái:** Gửi tín hiệu tọa độ (GPS) để hệ thống Tracking cập nhật vị trí lên bản đồ cho hành khách.
+
+---
+
+## 3. SƠ ĐỒ KIẾN TRÚC GIAO DIỆN
 
 ```mermaid
 graph TD
@@ -29,109 +61,62 @@ graph TD
     classDef user fill:#ffffff,stroke:#e8832a,stroke-width:2px,color:#1a1410,rx:5px,ry:5px;
     classDef core fill:#faf9f7,stroke:#c4b5a2,stroke-width:1px,color:#1a1410,rx:5px,ry:5px;
     classDef external fill:#f09a40,stroke:#e8832a,stroke-width:2px,color:#ffffff,rx:5px,ry:5px;
-    classDef data fill:#ffffff,stroke:#cccccc,stroke-width:1px,stroke-dasharray: 5 5;
+    
+    User((Khách Hàng / Admin)):::user
+    
+    subgraph UI Components
+        Home[Trang chủ & Tìm kiếm]:::core
+        Booking[Đặt vé & Giảm giá]:::core
+        Dash[Admin Dashboard]:::core
+    end
+    
+    subgraph Trạng thái (Context)
+        AuthContext[Phiên Đăng Nhập]:::core
+    end
+    
+    subgraph Dịch vụ bên ngoài
+        Payment[Thanh toán VNPay/PayPal]:::external
+        Realtime[Bản đồ & AI Chatbot]:::external
+    end
+    
+    Backend[(Máy Chủ Backend)]:::external
 
-    %% Nodes
-    User((Passenger / Admin)):::user
-    
-    subgraph UI Layer [User Interface Components]
-        Home[Home / Landing]:::core
-        Booking[Seat Booking & Checkout]:::core
-        Dash[Admin Dashboard / Analytics]:::core
-    end
-    
-    subgraph State Management [React Context & Reducers]
-        AuthContext[Authentication State]:::core
-        ChatContext[Live Chat State]:::core
-    end
-    
-    subgraph Integration Layer [External Services]
-        Payment[Payment Gateways]:::external
-        Realtime[Firebase Realtime DB]:::external
-        Maps[Geolocation & Tracking]:::external
-    end
-    
-    Backend[(Spring Boot API Server)]:::external
-
-    %% Connections
-    User -->|Interacts| Home
-    User -->|Interacts| Booking
-    User -->|Interacts| Dash
+    User --> Home
+    User --> Booking
+    User --> Dash
     
     Home --> AuthContext
     Booking --> AuthContext
-    Dash --> AuthContext
     
-    Home --> ChatContext
-    
-    Booking -->|Processes| Payment
-    ChatContext -->|Syncs| Realtime
-    Dash -->|Fetches Data| Backend
-    Booking -->|REST API| Backend
+    Booking --> Payment
+    Home --> Realtime
+    Dash --> Backend
+    Booking --> Backend
 ```
 
-## 3. CORE MODULES
+---
 
-### Passenger Interface
-*   **Interactive Seat Selection**: Real-time synchronization of seat availability mapped to physical bus layouts.
-*   **Dynamic Pricing & Promotions**: Automated voucher validation and checkout recalculation.
-*   **Digital Boarding Pass**: Instant PDF ticket generation and dynamic QR code generation for scanning at terminals.
-*   **Omnichannel Payments**: Seamless integration with VNPay, PayPal, and digital wallets.
-*   **AI Assistant & Live Chat**: Embedded floating widgets providing 24/7 automated support and human-agent routing.
+## 4. HƯỚNG DẪN CÀI ĐẶT
 
-### Administrator Dashboard
-*   **Data Visualization**: Integrated Recharts providing interactive Line, Bar, and Pie charts for revenue and demographic analysis.
-*   **Data Exportation**: One-click CSV/Excel report generation for accounting and auditing.
-*   **Resource Management**: Full CRUD capabilities for route planning, fleet management, and staff assignments.
-
-## 4. DIRECTORY STRUCTURE
-
-```text
-src/
-├── components/           # Reusable UI modules
-│   ├── booking/          # Checkout logic, Seat matrix, PDF generation
-│   ├── chat/             # AI Assistant logic & Firebase integration
-│   ├── manager/          # Administrative tables, charts, export modules
-│   └── payment/          # Gateway integrations (VNPay, PayPal)
-├── configs/              # Environment variables, API interceptors
-├── contexts/             # Global state (UserContext, ChatContext)
-├── services/             # Background tasks (Notifications, Geolocation)
-├── utils/                # Pure functions (Date formatting, Currency formatting)
-└── App.js                # Root router & Layout wrapper
-```
-
-## 5. DEPLOYMENT GUIDE
-
-### Prerequisites
-*   Node.js v16.x or higher
-*   NPM package manager
-
-### Local Environment Setup
 ```bash
-# Clone the repository
+# 1. Tải mã nguồn về máy
 git clone https://github.com/Tranloc12/Frontend-Web.git
 
-# Navigate to the workspace
+# 2. Truy cập thư mục
 cd Frontend-Web/carmanagementweb
 
-# Install required dependencies
+# 3. Cài đặt các thư viện phụ thuộc
 npm install
 
-# Start the development server
+# 4. Khởi chạy ứng dụng
 npm start
 ```
-The application will launch on `http://localhost:3000`.
-
-### API Configuration
-To direct API calls to your local backend environment, modify `src/configs/Apis.js`:
-```javascript
-const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8080/CarManagementApp/api";
-```
+Truy cập `http://localhost:3000` trên trình duyệt để sử dụng.
 
 <br/>
 <div align="center">
   <hr style="width: 50%; border: 1px solid #eaeaea;" />
   <p style="color: #888; font-size: 0.9em; margin-top: 20px;">
-    <i>Architected for Scalability, Designed for Excellence.</i>
+    <i>Thiết kế hướng tới trải nghiệm người dùng tối cao.</i>
   </p>
 </div>
