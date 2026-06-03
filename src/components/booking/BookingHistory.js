@@ -5,6 +5,7 @@ import QRCode from "react-qr-code";
 import MyAxios, { authApis, endpoints } from "../../configs/Apis";
 import { MyUserContext } from "../../contexts/Contexts";
 import moment from "moment";
+import html2pdf from "html2pdf.js";
 
 // Định dạng ngày từ mảng [year, month, day, hour, minute]
 const formatArrayDate = (dateArray) => {
@@ -38,6 +39,19 @@ const BookingHistory = () => {
     const handleCloseQR = () => {
         setShowQR(false);
         setSelectedTicket(null);
+    };
+
+    const handleDownloadPDF = () => {
+        const element = document.getElementById("ticket-content");
+        const opt = {
+            margin:       10,
+            filename:     `VeDienTu_${selectedTicket?.id}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
     };
 
     useEffect(() => {
@@ -219,7 +233,7 @@ const BookingHistory = () => {
                 </Modal.Header>
                 <Modal.Body className="text-center p-4">
                     {selectedTicket && (
-                        <div>
+                        <div id="ticket-content" style={{ padding: '20px', background: '#fff', borderRadius: '12px' }}>
                             <div style={{ background: '#fff', padding: '16px', display: 'inline-block', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.1)', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', marginBottom: '20px' }}>
                                 <QRCode 
                                     value={`TICKET:${selectedTicket.id}|ROUTE:${selectedTicket.tripId?.routeId?.routeName}|SEAT:${selectedTicket.seatNumbers}|DATE:${formatArrayDate(selectedTicket.tripId?.departureTime)}`} 
@@ -237,12 +251,18 @@ const BookingHistory = () => {
                             <p style={{ color: '#5c4f3a', marginBottom: '0' }}>
                                 <strong>Khởi hành:</strong> {formatArrayDate(selectedTicket.tripId?.departureTime)}
                             </p>
+                            <div style={{ marginTop: '20px', borderTop: '1px dashed #ccc', paddingTop: '10px', fontSize: '0.8rem', color: '#9c8c78' }}>
+                                Cảm ơn quý khách đã sử dụng dịch vụ của XeKhách. Vui lòng xuất trình mã QR này khi lên xe.
+                            </div>
                         </div>
                     )}
                 </Modal.Body>
-                <Modal.Footer style={{ borderTop: 'none', justifyContent: 'center' }}>
-                    <Button variant="primary" onClick={() => window.print()}>
+                <Modal.Footer style={{ borderTop: 'none', justifyContent: 'center', gap: '10px' }}>
+                    <Button variant="outline-secondary" onClick={() => window.print()}>
                         <i className="fa-solid fa-print me-1"></i> In vé
+                    </Button>
+                    <Button variant="primary" onClick={handleDownloadPDF} style={{ background: 'linear-gradient(135deg, #e8832a, #f09a40)', border: 'none' }}>
+                        <i className="fa-solid fa-file-pdf me-1"></i> Tải file PDF
                     </Button>
                 </Modal.Footer>
             </Modal>
