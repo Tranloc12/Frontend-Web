@@ -1,8 +1,7 @@
 import { useContext, useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import cookie from "react-cookies";
-
 import Apis, { authApis, endpoints } from "../configs/Apis.js";
 import MySpinner from "./layout/MySpinner";
 import { MyDispatchContext } from "../contexts/Contexts";
@@ -12,28 +11,22 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate();
   const dispatch = useContext(MyDispatchContext);
 
-  const handleChange = (field, value) => {
-    setCredentials((prev) => ({ ...prev, [field]: value }));
-  };
+  const handleChange = (field, value) => setCredentials(prev => ({ ...prev, [field]: value }));
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg(null);
     setLoading(true);
-
     try {
       const res = await Apis.post(endpoints.login, credentials);
-      const token = res.data.token;
-      cookie.save("token", token, { path: "/" });
+      cookie.save("token", res.data.token, { path: "/" });
       const userRes = await authApis().get(endpoints.currentUser);
       dispatch({ type: "login", payload: userRes.data });
       navigate("/", { replace: true });
     } catch (err) {
-      console.error(err);
       setErrorMsg("Tên đăng nhập hoặc mật khẩu không đúng!");
     } finally {
       setLoading(false);
@@ -42,193 +35,104 @@ const Login = () => {
 
   return (
     <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'linear-gradient(160deg, #faf9f7 0%, #f5f0e8 40%, #fff8ee 100%)',
+      minHeight: '100vh', position: 'fixed', inset: 0, zIndex: 999,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: 'linear-gradient(160deg, #faf9f7 0%, #f5f0e8 50%, #fef3e2 100%)',
       padding: '20px',
-      position: 'fixed',
-      top: 0, left: 0, right: 0, bottom: 0,
-      zIndex: 999,
     }}>
-      {/* Decorative circles */}
-      <div style={{
-        position: 'absolute', width: '400px', height: '400px',
-        background: 'radial-gradient(circle, rgba(232,131,42,0.07) 0%, transparent 70%)',
-        top: '-100px', right: '-100px', borderRadius: '50%', pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute', width: '300px', height: '300px',
-        background: 'radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%)',
-        bottom: '-80px', left: '-80px', borderRadius: '50%', pointerEvents: 'none'
-      }} />
+      {/* Soft decorative blobs */}
+      <div style={{ position:'absolute', width:'500px', height:'500px', background:'radial-gradient(circle, rgba(232,131,42,0.06) 0%, transparent 70%)', top:'-150px', right:'-150px', borderRadius:'50%', pointerEvents:'none' }} />
+      <div style={{ position:'absolute', width:'350px', height:'350px', background:'radial-gradient(circle, rgba(212,168,83,0.05) 0%, transparent 70%)', bottom:'-80px', left:'-80px', borderRadius:'50%', pointerEvents:'none' }} />
 
       <div style={{
         background: '#ffffff',
-        border: '1px solid rgba(0,0,0,0.08)',
+        border: '1px solid rgba(0,0,0,0.07)',
         borderRadius: '24px',
         padding: '48px 40px',
-        width: '100%',
-        maxWidth: '420px',
-        boxShadow: '0 8px 40px rgba(0,0,0,0.1), 0 2px 10px rgba(0,0,0,0.06)',
-        position: 'relative',
-        zIndex: 1,
+        width: '100%', maxWidth: '420px',
+        boxShadow: '0 4px 6px rgba(0,0,0,0.04), 0 20px 50px rgba(0,0,0,0.1)',
+        position: 'relative', zIndex: 1,
       }}>
         {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <div style={{ textAlign:'center', marginBottom:'32px' }}>
           <div style={{
-            width: '64px', height: '64px',
+            width:'64px', height:'64px',
             background: 'linear-gradient(135deg, #e8832a, #f09a40)',
-            borderRadius: '16px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 16px',
-            boxShadow: '0 8px 24px rgba(232,131,42,0.3)',
+            borderRadius:'16px', display:'flex', alignItems:'center', justifyContent:'center',
+            margin:'0 auto 16px', boxShadow:'0 8px 24px rgba(232,131,42,0.28)',
           }}>
-            <i className="fa-solid fa-bus" style={{ fontSize: '28px', color: '#fff' }}></i>
+            <i className="fa-solid fa-bus" style={{ fontSize:'28px', color:'#fff' }}></i>
           </div>
-          <h1 style={{
-            fontSize: '1.8rem', fontFamily: "'Playfair Display', serif",
-            fontWeight: 700, color: '#1a1410',
-            marginBottom: '8px', letterSpacing: '-0.5px'
-          }}>
+          <h1 style={{ fontFamily:"'Playfair Display', serif", fontSize:'1.9rem', fontWeight:700, color:'#1a1410', marginBottom:'8px' }}>
             Đăng nhập
           </h1>
-          <p style={{ color: '#9c8c78', fontSize: '0.9rem', margin: 0 }}>
-            Chào mừng trở lại! Vui lòng đăng nhập.
-          </p>
+          <p style={{ color:'#9c8c78', fontSize:'0.9rem', margin:0 }}>Chào mừng trở lại! Vui lòng đăng nhập.</p>
         </div>
 
         {errorMsg && (
-          <div style={{
-            background: 'rgba(239,68,68,0.1)',
-            border: '1px solid rgba(239,68,68,0.3)',
-            borderRadius: '12px',
-            padding: '12px 16px',
-            marginBottom: '20px',
-            color: '#fca5a5',
-            fontSize: '0.9rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}>
-            <i className="fa-solid fa-circle-exclamation"></i>
-            {errorMsg}
+          <div style={{ background:'#fef2f2', border:'1px solid #fecaca', borderRadius:'12px', padding:'12px 16px', marginBottom:'20px', color:'#dc2626', fontSize:'0.88rem', display:'flex', alignItems:'center', gap:'8px' }}>
+            <i className="fa-solid fa-circle-exclamation"></i>{errorMsg}
           </div>
         )}
 
         <Form onSubmit={handleLogin}>
-          <Form.Group className="mb-4">
-            <Form.Label style={{
-              color: '#94a3b8', fontSize: '0.75rem', fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '8px'
-            }}>
+          {/* Username */}
+          <div style={{ marginBottom:'18px' }}>
+            <label style={{ display:'block', color:'#9c8c78', fontSize:'0.72rem', fontWeight:700, textTransform:'uppercase', letterSpacing:'1.5px', marginBottom:'8px' }}>
               Tên đăng nhập
-            </Form.Label>
-            <div style={{ position: 'relative' }}>
-              <span style={{
-                position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)',
-                color: '#64748b', fontSize: '1rem', pointerEvents: 'none'
-              }}>
+            </label>
+            <div style={{ position:'relative' }}>
+              <span style={{ position:'absolute', left:'16px', top:'50%', transform:'translateY(-50%)', color:'#c4b8a8', fontSize:'0.95rem' }}>
                 <i className="fa-solid fa-user"></i>
               </span>
-              <Form.Control
-                type="text"
-                placeholder="Nhập tên đăng nhập..."
-                value={credentials.username}
-                onChange={(e) => handleChange("username", e.target.value)}
-                required
-                autoComplete="username"
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  color: '#f1f5f9',
-                  borderRadius: '12px',
-                  padding: '14px 16px 14px 46px',
-                  fontSize: '0.95rem',
-                }}
+              <Form.Control type="text" placeholder="Tên đăng nhập..." value={credentials.username}
+                onChange={e => handleChange("username", e.target.value)} required autoComplete="username"
+                style={{ background:'#faf9f7', border:'1.5px solid rgba(0,0,0,0.09)', color:'#1a1410', borderRadius:'12px', padding:'13px 16px 13px 44px', fontSize:'0.95rem' }}
               />
             </div>
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-5">
-            <Form.Label style={{
-              color: '#94a3b8', fontSize: '0.75rem', fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '8px'
-            }}>
+          {/* Password */}
+          <div style={{ marginBottom:'28px' }}>
+            <label style={{ display:'block', color:'#9c8c78', fontSize:'0.72rem', fontWeight:700, textTransform:'uppercase', letterSpacing:'1.5px', marginBottom:'8px' }}>
               Mật khẩu
-            </Form.Label>
-            <div style={{ position: 'relative' }}>
-              <span style={{
-                position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)',
-                color: '#64748b', fontSize: '1rem', pointerEvents: 'none'
-              }}>
+            </label>
+            <div style={{ position:'relative' }}>
+              <span style={{ position:'absolute', left:'16px', top:'50%', transform:'translateY(-50%)', color:'#c4b8a8', fontSize:'0.95rem' }}>
                 <i className="fa-solid fa-lock"></i>
               </span>
-              <Form.Control
-                type={showPassword ? "text" : "password"}
-                placeholder="Nhập mật khẩu..."
-                value={credentials.password}
-                onChange={(e) => handleChange("password", e.target.value)}
-                required
-                autoComplete="current-password"
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  color: '#f1f5f9',
-                  borderRadius: '12px',
-                  padding: '14px 46px 14px 46px',
-                  fontSize: '0.95rem',
-                }}
+              <Form.Control type={showPassword?"text":"password"} placeholder="Mật khẩu..." value={credentials.password}
+                onChange={e => handleChange("password", e.target.value)} required autoComplete="current-password"
+                style={{ background:'#faf9f7', border:'1.5px solid rgba(0,0,0,0.09)', color:'#1a1410', borderRadius:'12px', padding:'13px 44px 13px 44px', fontSize:'0.95rem' }}
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                style={{
-                  position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)',
-                  background: 'none', border: 'none', color: '#64748b', cursor: 'pointer',
-                  padding: '4px',
-                }}
-              >
-                <i className={`fa-solid fa-eye${showPassword ? '-slash' : ''}`}></i>
+              <button type="button" onClick={() => setShowPassword(!showPassword)}
+                style={{ position:'absolute', right:'14px', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', color:'#c4b8a8', cursor:'pointer', padding:'4px' }}>
+                <i className={`fa-solid fa-eye${showPassword?'-slash':''}`}></i>
               </button>
             </div>
-          </Form.Group>
+          </div>
 
           {loading ? (
-            <div style={{ textAlign: 'center', padding: '10px 0' }}>
-              <MySpinner />
-            </div>
+            <div style={{ textAlign:'center', padding:'10px 0' }}><MySpinner /></div>
           ) : (
-            <button
-              type="submit"
-              style={{
-                width: '100%',
-                padding: '14px',
-                background: 'linear-gradient(135deg, #e75702, #ff7a30)',
-                border: 'none',
-                borderRadius: '12px',
-                color: '#fff',
-                fontSize: '1rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                boxShadow: '0 8px 24px rgba(231,87,2,0.4)',
-                transition: 'all 0.3s ease',
-                letterSpacing: '0.3px',
-              }}
-              onMouseEnter={e => { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = '0 12px 30px rgba(231,87,2,0.55)'; }}
-              onMouseLeave={e => { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = '0 8px 24px rgba(231,87,2,0.4)'; }}
+            <button type="submit" style={{
+              width:'100%', padding:'14px',
+              background: 'linear-gradient(135deg, #e8832a, #f09a40)',
+              border:'none', borderRadius:'12px', color:'#fff',
+              fontSize:'0.95rem', fontWeight:700, cursor:'pointer',
+              boxShadow:'0 6px 20px rgba(232,131,42,0.3)',
+              transition:'all 0.3s ease', letterSpacing:'0.5px',
+            }}
+              onMouseEnter={e => { e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow='0 10px 28px rgba(232,131,42,0.45)'; }}
+              onMouseLeave={e => { e.target.style.transform='translateY(0)'; e.target.style.boxShadow='0 6px 20px rgba(232,131,42,0.3)'; }}
             >
-              <i className="fa-solid fa-right-to-bracket me-2"></i>
-              Đăng nhập
+              <i className="fa-solid fa-right-to-bracket me-2"></i>Đăng nhập
             </button>
           )}
 
-          <p style={{ textAlign: 'center', marginTop: '24px', color: '#64748b', fontSize: '0.9rem' }}>
+          <p style={{ textAlign:'center', marginTop:'20px', color:'#9c8c78', fontSize:'0.9rem' }}>
             Chưa có tài khoản?{' '}
-            <Link to="/register" style={{ color: '#ff7a30', fontWeight: 600, textDecoration: 'none' }}>
-              Đăng ký ngay
-            </Link>
+            <Link to="/register" style={{ color:'#e8832a', fontWeight:700, textDecoration:'none' }}>Đăng ký ngay</Link>
           </p>
         </Form>
       </div>
