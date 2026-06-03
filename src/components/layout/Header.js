@@ -52,20 +52,20 @@ const Header = () => {
         <Navbar.Brand as={Link} to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
           <div style={{
             width: '38px', height: '38px',
-            background: 'linear-gradient(135deg, #e75702, #ff7a30)',
+            background: 'linear-gradient(135deg, #d4a853, #FFD700, #B8860B)',
             borderRadius: '10px',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(231,87,2,0.4)',
+            boxShadow: '0 4px 16px rgba(212,168,83,0.45)',
             flexShrink: 0,
           }}>
-            <i className="fa-solid fa-bus" style={{ fontSize: '18px', color: '#fff' }}></i>
+            <i className="fa-solid fa-bus" style={{ fontSize: '18px', color: '#1a1000' }}></i>
           </div>
           <span style={{
-            fontSize: '1.3rem', fontWeight: 900, color: '#fff',
+            fontSize: '1.3rem', fontWeight: 900, color: '#f5f0e8',
             letterSpacing: '-0.5px', lineHeight: 1,
           }}>
             Xe<span style={{
-              background: 'linear-gradient(135deg, #e75702, #ff7a30)',
+              background: 'linear-gradient(135deg, #d4a853, #FFD700)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
             }}>Khách</span>
@@ -181,18 +181,19 @@ const Header = () => {
                   Đăng ký
                 </Nav.Link>
                 <Link to="/login" style={{
-                  background: 'linear-gradient(135deg, #e75702, #ff7a30)',
-                  color: '#fff', fontWeight: 700,
+                  background: 'linear-gradient(135deg, #d4a853, #FFD700, #B8860B)',
+                  color: '#1a1000', fontWeight: 800,
                   padding: '9px 20px',
                   borderRadius: '10px',
-                  fontSize: '0.9rem',
+                  fontSize: '0.85rem',
                   textDecoration: 'none',
-                  boxShadow: '0 4px 15px rgba(231,87,2,0.35)',
+                  boxShadow: '0 4px 16px rgba(212,168,83,0.4)',
                   transition: 'all 0.3s ease',
                   display: 'inline-block',
+                  letterSpacing: '0.5px',
                 }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(231,87,2,0.5)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(231,87,2,0.35)'; }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(212,168,83,0.6)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(212,168,83,0.4)'; }}
                 >
                   <i className="fa-solid fa-right-to-bracket me-1"></i> Đăng nhập
                 </Link>

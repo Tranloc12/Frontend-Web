@@ -206,14 +206,15 @@ const Home = () => {
                 </div>
                 <div className="hero-content">
                     <div className="hero-badge">
-                        <i className="fa-solid fa-bus"></i>
-                        <span>Hệ thống Quản lý Xe Khách</span>
+                        <i className="fa-solid fa-crown"></i>
+                        <span>Premium Bus Travel Experience</span>
                     </div>
                     <h1 className="hero-title">
-                        Tìm kiếm chuyến đi <span className="highlight">hoàn hảo</span>
+                        Hành trình của bạn,{" "}<span className="highlight">sang trọng</span>{" "}hơn
                     </h1>
+                    <div className="hero-divider"></div>
                     <p className="hero-subtitle">
-                        Khám phá và đặt vé xe khách một cách nhanh chóng, tiện lợi &amp; an toàn.
+                        Khám phá và đặt vé xe khách chất lượng cao — an toàn, tiện lợi và đẳng cấp.
                     </p>
                     <div className="hero-stats">
                         <div className="hero-stat">
@@ -306,9 +307,14 @@ const Home = () => {
 
             {/* Trips list */}
             <Container className="main-content">
-                <h2 className="section-title">
-                    {isSearching ? "🔍 Kết quả tìm kiếm" : "🚌 Các Chuyến đi Tiêu biểu"}
-                </h2>
+                <div className="section-title">
+                    <span className="section-title-gold">
+                        {isSearching ? "✨ Kết quả tìm kiếm" : "✨ Featured Journeys"}
+                    </span>
+                    <span className="section-title-serif">
+                        {isSearching ? "Chuyến đi phù hợp" : "Các Chuyến đi Tiêu biểu"}
+                    </span>
+                </div>
                 {loading ? (
                     <div className="text-center my-5">
                         <Spinner animation="border" variant="warning" role="status" />
@@ -392,10 +398,10 @@ const Home = () => {
             <Container className="main-content">
                 <Card className="reviews-card mt-5">
                     <Card.Body className="p-4 p-md-5">
-                        <Card.Title className="reviews-card-title text-center mb-5" style={{fontSize: '2rem'}}>
-                            <i className="fa-solid fa-star me-2" style={{color:'#f59e0b'}}></i>
-                            ⭐ Đánh giá của Khách hàng
-                        </Card.Title>
+                        <div className="section-title" style={{marginBottom:'3rem'}}>
+                            <span className="section-title-gold">⭐ Customer Reviews</span>
+                            <span className="section-title-serif">Đánh giá của Khách hàng</span>
+                        </div>
 
                         {loadingReviews ? (
                             <div className="text-center my-4">
