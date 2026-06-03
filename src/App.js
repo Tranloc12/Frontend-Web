@@ -66,6 +66,8 @@ import NotificationList from "./services/NotificationList.js";
 import BusStationList from "./components/busstation/BusStationList.js";
 import TransferPointList from "./components/transferPoint/TransferPointList.js";
 import TripTransferList from "./components/transferPoint/TripTransferList.js";
+import AdminDashboard from "./components/admin/AdminDashboard.js";
+import MyTickets from "./components/booking/MyTickets.js";
 
 
 const App = () => {
@@ -329,12 +331,19 @@ const App = () => {
                       </ProtectedRoute>
                     } />
 
+                    {/* ✅ Dashboard Admin */}
+                    <Route path="/admin/dashboard" element={
+                      <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.MANAGER, ROLES.STAFF]}>
+                        <AdminDashboard />
+                      </ProtectedRoute>
+                    } />
 
-
-
-
-
-
+                    {/* ✅ Vé của tôi - QR Code */}
+                    <Route path="/my-tickets" element={
+                      <ProtectedRoute allowedRoles={[ROLES.PASSENGER, ROLES.ADMIN, ROLES.MANAGER, ROLES.STAFF]}>
+                        <MyTickets />
+                      </ProtectedRoute>
+                    } />
 
                     {/* ------------------------------- */}
 
